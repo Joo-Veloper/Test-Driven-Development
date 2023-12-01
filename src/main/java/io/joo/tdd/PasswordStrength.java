@@ -1,5 +1,5 @@
 package io.joo.tdd;
 
 public enum PasswordStrength {
-    NORMAL,STRONG
+    INVALID,NORMAL,STRONG,WEAK
 }
