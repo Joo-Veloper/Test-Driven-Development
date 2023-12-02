@@ -60,5 +60,10 @@ class PasswordStrengthMeterTest {
         assertStrength("12345", PasswordStrength.WEAK);
     }
 
+    @DisplayName("대문자 포함 조건")
+    @Test
+    void meetsOnlyUpperCriteria_Then_Weak() {
+        assertStrength("ABZEF", PasswordStrength.WEAK);
+    }
 
 }
