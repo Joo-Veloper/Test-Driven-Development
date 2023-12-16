@@ -72,4 +72,10 @@ class PasswordStrengthMeterTest {
         assertStrength("abc", PasswordStrength.WEAK);
     }
 
+    @Test
+    void meetsOtherCreteria_except_for_Length_Then_Normal(){
+        PasswordStrengthMeter meter = new PasswordStrengthMeter();
+        PasswordStrength result = meter.meter("ab12!@A");
+        assertEquals(PasswordStrength.NORMAL,result);
+    }
 }
