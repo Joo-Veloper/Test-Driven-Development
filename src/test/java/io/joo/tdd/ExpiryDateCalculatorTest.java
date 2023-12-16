@@ -171,5 +171,17 @@ public class ExpiryDateCalculatorTest {
                 LocalDate.of(2019, 7, 31)
         );
     }
+
+    @Test
+    @DisplayName("십만원을 납부시 1년 제공")
+    void OneYearOffer() {
+        assertExpiryDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019,1,28))
+                        .payAmount(100_000)
+                        .build(),
+                LocalDate.of(2020,1,28)
+        );
+    }
 }
 
