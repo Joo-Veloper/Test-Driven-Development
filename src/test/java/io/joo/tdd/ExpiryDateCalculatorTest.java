@@ -1,5 +1,6 @@
 package io.joo.tdd;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.cglib.core.Local;
 
@@ -48,7 +49,8 @@ public class ExpiryDateCalculatorTest {
 //        assertEquals(LocalDate.of(2019,6,5),expiryDate2);
 //    }
     @Test
-    void 만원_납부하면_한달_뒤가_만료일이_됨() {
+    @DisplayName("만원 납부하면 한달 뒤가 만료일이 됨")
+    void ExpirationDate() {
         assertExpiryDate(
                 PayData.builder()
                         .billingDate(LocalDate.of(2019, 3, 1))
@@ -65,7 +67,8 @@ public class ExpiryDateCalculatorTest {
 
 
     @Test
-    void 납부일과_한달_뒤_일자가_같지_않음() {
+    @DisplayName("납부일과 한달 뒤 일자가 같지 않음")
+    void PaymentDate() {
         assertExpiryDate(
                 PayData.builder()
                         .billingDate(LocalDate.of(2019, 1, 31))
@@ -95,10 +98,11 @@ public class ExpiryDateCalculatorTest {
         ExpiryDateCalculator cal = new ExpiryDateCalculator();
         LocalDate realExpiryDate = cal.calculateExpiryDate(payData);
         assertEquals(expectedExpiryDate, realExpiryDate);
-    }
+     }
 
     @Test
-    void 첫_납부일과_만료일_일자가_다를때_만원_납부(){
+    @DisplayName("첫 납부일과 만료일 일자가 다를때 만원 납부")
+    void differentDate(){
         PayData payData = PayData.builder()
                 .firstBillingDate(LocalDate.of(2019, 1, 31))
                 .billingDate(LocalDate.of(2019, 2, 28))
@@ -119,6 +123,25 @@ public class ExpiryDateCalculatorTest {
                 .payAmount(10_000)
                 .build();
         assertExpiryDate(payData3, LocalDate.of(2019, 7, 31));
+    }
+
+    @Test
+    @DisplayName("이만원 이상 납부하면 비례해서 만료일 계산")
+    void calculateDate() {
+        assertExpiryDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019, 3, 1))
+                        .payAmount(20_000)
+                        .build(),
+                LocalDate.of(2019, 5, 1)
+        );
+        assertExpiryDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019, 3,1))
+                        .payAmount(30_000)
+                        .build(),
+                LocalDate.of(2019,6,1)
+        );
     }
 }
 
