@@ -2,7 +2,7 @@ package io.joo.tdd;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalculatorTest {
 //    @Test
@@ -16,4 +16,6 @@ class CalculatorTest {
         assertEquals(3, sum);
         assertEquals(5,Calculator.plus(4,1));
     }
+
+
 }
