@@ -183,5 +183,19 @@ public class ExpiryDateCalculatorTest {
                 LocalDate.of(2020,1,28)
         );
     }
+
+    @Test
+    @DisplayName("첫 납부일과 만료일 일자가 다를때 이만원 이상 납부")
+    void FirstAndLast(){
+        assertExpiryDate(
+                PayData.builder()
+                        .firstBillingDate(LocalDate.of(2019, 1, 31))
+                        .billingDate(LocalDate.of(2019, 2, 28))
+                        .payAmount(20_000)
+                        .build(),
+                LocalDate.of(2019, 4, 30)
+        );
+    }
+
 }
 
