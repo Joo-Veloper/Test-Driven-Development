@@ -10,11 +10,13 @@ class UserRegisterTest {
     private UserRegister userRegister;
     private UserRepository userRepository;
     private StubWeakPasswordChecker stubWeakPasswordChecker = new StubWeakPasswordChecker();
+    private MemoryUserRepository fakeRepository = new MemoryUserRepository();
 
     @BeforeEach
     void setUp() {
-        userRegister = new UserRegister(stubWeakPasswordChecker);
+        userRegister = new UserRegister(stubWeakPasswordChecker, fakeRepository);
     }
+
     @Test
     @DisplayName("약한 암호 Test")
     void weekPassword() {
@@ -25,4 +27,12 @@ class UserRegisterTest {
         });
     }
 
+    @Test
+    @DisplayName("이미 같은 ID 존재시 가입 실패")
+    void existsId(){
+        fakeRepository.save(new User("id", "pw1", "email@emali.com"));
+        assertThrows(DupIdException.class, () -> {
+            userRegister.register("id", "pw2", "email");
+        });
+    }
 }
