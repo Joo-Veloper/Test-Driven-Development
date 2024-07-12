@@ -29,10 +29,20 @@ class UserRegisterTest {
 
     @Test
     @DisplayName("이미 같은 ID 존재시 가입 실패")
-    void existsId(){
+    void existsId() {
         fakeRepository.save(new User("id", "pw1", "email@emali.com"));
         assertThrows(DupIdException.class, () -> {
             userRegister.register("id", "pw2", "email");
         });
+    }
+
+    @Test
+    @DisplayName("같은 ID가 없을시 가입 성공")
+    void No_ExistsId() {
+        userRegister.register("id", "password", "email");
+
+        User savedUser = fakeRepository.findById("id");
+        assertEquals("id", savedUser.getId());
+        assertEquals("email", savedUser.getEmail());
     }
 }
