@@ -1,4 +1,4 @@
-package io.joo.tdd.treason;
+package io.joo.tdd.treason.account;
 
 import io.joo.tdd.treason.account.*;
 import org.junit.jupiter.api.BeforeEach;
