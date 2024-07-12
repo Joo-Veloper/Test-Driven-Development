@@ -1,4 +1,4 @@
-package io.joo.tdd.treason;
+package io.joo.tdd.treason.account;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package io.joo.tdd.treason;
+package io.joo.tdd.treason.account;
 
-public class JpaAutoDebitInfoRepository implements AutoDebitInfoRepository{
+public class StubAutoDebitInfoRepository implements AutoDebitInfoRepository {
     @Override
     public void save(AutoDebitInfo info) {
 

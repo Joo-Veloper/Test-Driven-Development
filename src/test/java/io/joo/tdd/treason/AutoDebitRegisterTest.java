@@ -1,12 +1,13 @@
 package io.joo.tdd.treason;
 
 
+import io.joo.tdd.treason.account.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static io.joo.tdd.treason.CardValidity.THEFT;
-import static io.joo.tdd.treason.CardValidity.VALID;
+import static io.joo.tdd.treason.account.CardValidity.THEFT;
+import static io.joo.tdd.treason.account.CardValidity.VALID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AutoDebitRegisterTest {

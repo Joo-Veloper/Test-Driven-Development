@@ -1,4 +1,4 @@
-package io.joo.tdd.treason;
+package io.joo.tdd.treason.account;
 
 public class StubCardNumberValidator extends CardNumberValidator {
    private String invalidNo;

@@ -1,4 +1,4 @@
-package io.joo.tdd.treason;
+package io.joo.tdd.treason.account;
 
 public interface AutoDebitInfoRepository {
     void save(AutoDebitInfo info);
