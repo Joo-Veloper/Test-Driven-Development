@@ -3,29 +3,43 @@ package io.joo.tdd.treason.user;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserRegisterTest {
     private UserRegister userRegister;
     private UserRepository userRepository;
-    private StubWeakPasswordChecker stubWeakPasswordChecker = new StubWeakPasswordChecker();
+    private WeakPasswordChecker mockPasswordChecker = Mockito.mock(WeakPasswordChecker.class);
     private MemoryUserRepository fakeRepository = new MemoryUserRepository();
+    private EmailNotifier mockEmailNotifier = Mockito.mock(EmailNotifier.class);
     private SpyEmailNotifier spyEmailNotifier = new SpyEmailNotifier();
 
     @BeforeEach
     void setUp() {
-        userRegister = new UserRegister(stubWeakPasswordChecker, fakeRepository, spyEmailNotifier);
+        userRegister = new UserRegister(mockPasswordChecker, fakeRepository, spyEmailNotifier);
     }
 
     @Test
     @DisplayName("약한 암호 Test")
     void weekPassword() {
-        stubWeakPasswordChecker.setWeak(true);
+        BDDMockito.given(mockPasswordChecker.checkPasswordWeak("password")).willReturn(true);
 
         assertThrows(WeakPasswordException.class, () -> {
-            userRegister.register("id", "12345", "123@gmail.com");
+            userRegister.register("id", "password", "123@gmail.com");
         });
+    }
+
+    @Test
+    @DisplayName("암호 검사")
+    void passwordTest() {
+        userRegister.register("id", "password", "email");
+
+        BDDMockito.then(mockPasswordChecker)
+                .should()
+                .checkPasswordWeak(BDDMockito.anyString());
     }
 
     @Test
@@ -51,7 +65,9 @@ class UserRegisterTest {
     @DisplayName("가입하면 이메일 전송")
     void mail_Subscription() {
         userRegister.register("id", "password", "email@gmail.com");
+
         assertTrue(spyEmailNotifier.isCalled());
         assertEquals("email@gmail.com", spyEmailNotifier.getEmail());
     }
+
 }
