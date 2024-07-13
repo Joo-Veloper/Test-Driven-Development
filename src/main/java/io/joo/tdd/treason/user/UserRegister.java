@@ -5,9 +5,10 @@ public class UserRegister {
     private UserRepository userRepository;
     private EmailNotifier emailNotifier;
 
-    public UserRegister(WeakPasswordChecker passwordChecker,UserRepository userRepository) {
+    public UserRegister(WeakPasswordChecker passwordChecker, UserRepository userRepository, EmailNotifier emailNotifier) {
         this.passwordChecker = passwordChecker;
         this.userRepository = userRepository;
+        this.emailNotifier = emailNotifier;
         this.emailNotifier = emailNotifier;
     }
 
@@ -25,6 +26,6 @@ public class UserRegister {
             throw new DupIdException();
         }
         userRepository.save(new User(id, password, email));
-//        emailNotifier.sendRegisterEmail(email);
+        emailNotifier.sendRegisterEmail(email);
     }
 }
