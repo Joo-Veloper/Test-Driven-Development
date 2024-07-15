@@ -1,4 +1,4 @@
-package io.joo.tdd;
+package io.joo.tdd.basic;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
