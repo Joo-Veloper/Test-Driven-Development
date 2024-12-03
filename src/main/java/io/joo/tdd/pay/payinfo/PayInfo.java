@@ -1,0 +1,13 @@
+package io.joo.tdd.pay.payinfo;
+
+public class PayInfo {
+    private final String datetime;
+    private final String trNum;
+    private final int amounts;
+
+    public PayInfo(String datetime, String trNum, int amounts) {
+        this.datetime = datetime;
+        this.trNum = trNum;
+        this.amounts = amounts;
+    }
+}
