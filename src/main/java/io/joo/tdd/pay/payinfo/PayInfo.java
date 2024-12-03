@@ -10,4 +10,16 @@ public class PayInfo {
         this.trNum = trNum;
         this.amounts = amounts;
     }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public String getTrNum() {
+        return trNum;
+    }
+
+    public int getAmounts() {
+        return amounts;
+    }
 }
