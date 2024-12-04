@@ -11,28 +11,28 @@ import java.util.stream.Collectors;
 
 public class PaySync {
     private PayInfoDao payInfoDao = new PayInfoDao();
-    private String resourceFileName = "cp0001.csv";
+    private String filePath = "D:\\data\\pay\\cp0001.csv";
 
     public void setPayInfoDao(PayInfoDao payInfoDao) {
         this.payInfoDao = payInfoDao;
     }
 
-    public void setResourceFileName(String resourceFileName) {
-        this.resourceFileName = resourceFileName;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
-    public void sync() throws IOException, URISyntaxException {
-        // 클래스 로더를 사용해 resources 디렉토리 파일 경로 얻기
-        ClassLoader classLoader = getClass().getClassLoader();
-        Path path = Paths.get(Objects.requireNonNull(classLoader.getResource(resourceFileName)).toURI());
-
+    public void sync() throws IOException {
+        Path path = Paths.get(filePath);
         List<PayInfo> payInfos = Files.lines(path)
                 .map(line -> {
                     String[] data = line.split(",");
-                    return new PayInfo(data[0], data[1], Integer.parseInt(data[2]));
+                    PayInfo payInfo = new PayInfo(
+                            data[0], data[1], Integer.parseInt(data[2])
+                    );
+                    return payInfo;
                 })
                 .collect(Collectors.toList());
 
-        payInfos.forEach(payInfoDao::insert);
+        payInfos.forEach(pi -> payInfoDao.insert(pi));
     }
 }
